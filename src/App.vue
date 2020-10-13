@@ -18,7 +18,7 @@ export default {
 
 <style>
 * {
-  font-family: "Roboto";
+  font-family: "Nunito", sans-serif;
 }
 
 .v-btn,

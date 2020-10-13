@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import client from "./modules/clientStore";
+import customers from "./modules/customers";
 
 Vue.use(Vuex);
 
@@ -12,5 +12,5 @@ export default new Vuex.Store({
   },
   mutations: {},
   actions: {},
-  modules: { client },
+  modules: { customers },
 });

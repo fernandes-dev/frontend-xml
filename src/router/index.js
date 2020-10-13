@@ -20,18 +20,31 @@ const routes = [
     component: () => import("@/views/Home.vue"),
     children: [
       {
-        path: "/clients",
-        name: "Clients",
-        component: () => import("@/views/home/Clients.vue"),
+        path: "/",
+        name: "customers",
+        component: () => import("@/views/home/Customers.vue"),
+        children: [
+          {
+            path: "/",
+            name: "customers-list",
+            component: () => import("@/components/customers/ListCustomers.vue"),
+          },
+          {
+            path: "/detalhes/:cnpj",
+            name: "customer-details",
+            component: () =>
+              import("@/components/customers/CustomerDetails.vue"),
+          },
+        ],
       },
       {
         path: "/profile",
-        name: "Profile",
+        name: "profile",
         component: () => import("@/views/home/Profile.vue"),
       },
       {
         path: "/xml/:cnpj",
-        name: "Xml",
+        name: "xml",
         component: () => import("@/views/home/Xml.vue"),
       },
     ],
