@@ -1,16 +1,25 @@
 <template>
   <div>
-    <v-app-bar color="deep-purple" dark absolute height="60px">
-      <v-toolbar-title>Vedas XML</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <div v-if="!$vuetify.breakpoint.xsOnly" class="actions d-flex">
-        <v-spacer></v-spacer>
-        <v-btn @click="item.click" v-for="(item, i) in items" :key="i" text>
-          <v-icon>{{ item.icon }}</v-icon>
-          {{ item.text }}
+    <v-app-bar app color="white" flat>
+      <v-container class="py-0 fill-height">
+        <v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar>
+
+        <v-btn v-for="link in links" :key="link" text>
+          {{ link }}
         </v-btn>
-      </div>
+
+        <v-spacer></v-spacer>
+
+        <v-responsive max-width="260">
+          <v-text-field
+            dense
+            flat
+            hide-details
+            rounded
+            solo-inverted
+          ></v-text-field>
+        </v-responsive>
+      </v-container>
     </v-app-bar>
   </div>
 </template>
@@ -18,11 +27,9 @@
 <script>
 export default {
   data: () => ({
-    drawer: false
+    links: ["Minha conta", "Contabilidade", "Contato", "Atualizações"],
+    drawer: false,
   }),
-  props: {
-    items: Array
-  }
 };
 </script>
 
