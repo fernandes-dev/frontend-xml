@@ -92,11 +92,4 @@ export default {
   },
 };
 </script>
-<style>
-.fixed-menu {
-  position: sticky;
-  position: -webkit-sticky; /* for Safari */
-  top: 5em;
-  z-index: 2;
-}
-</style>
+verify object javascript in array
