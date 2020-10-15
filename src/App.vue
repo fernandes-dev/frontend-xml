@@ -7,7 +7,13 @@
 <script>
 export default {
   name: "App",
-
+  mounted() {
+    this.$store.dispatch("customers/request", {
+      state: "customers",
+      method: "get",
+      url: "/folder",
+    });
+  },
   components: {},
 
   data: () => ({
