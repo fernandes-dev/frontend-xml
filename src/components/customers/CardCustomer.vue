@@ -4,7 +4,7 @@
     flat
     class="pa-3"
     color="grey lighten-5"
-    :to="{ name: 'customer-details', params: { cnpj: customer.name } }"
+    @click="getFiles(customer)"
   >
     <v-row align="center" justify="center" class="d-flex flex-colunm">
       <v-col cols="6">
@@ -25,7 +25,27 @@ export default {
   props: {
     customer: Object,
   },
-  methods: {},
+  methods: {
+    getFiles(customer) {
+      console.log("merda");
+      localStorage.setItem("customer", customer.path);
+      // this.$store.commit("customers/request", ["customerSelected", null]);
+
+      this.$store.dispatch("customers/request", {
+        state: "customerSelected",
+        method: "post",
+        url: "/folder-param",
+        data: {
+          getPath: JSON.stringify({ value: customer.path }),
+          depth: 1,
+        },
+      });
+      this.$router.push({
+        name: "customer-details",
+        params: { cnpj: customer.name },
+      });
+    },
+  },
 };
 </script>
 
