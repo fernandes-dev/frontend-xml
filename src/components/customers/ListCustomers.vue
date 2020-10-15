@@ -18,7 +18,7 @@
     <v-row>
       <v-col
         cols="12"
-        sm="4"
+        sm="3"
         lg="3"
         v-for="(Customer, i) in Customers"
         :key="i"
@@ -35,11 +35,18 @@ export default {
   components: {
     Customer,
   },
+  mounted() {
+    this.$store.commit("customers/request", ["customerSelected", null]);
+  },
   computed: {
     Customers() {
-      return this.$store.state.customers.customers.children;
+      if (this.$store.state.customers.customers) {
+        return this.$store.state.customers.customers.children || {};
+      }
+      return {};
     },
   },
+  methods: {},
 };
 </script>
 
