@@ -1,30 +1,22 @@
 <template>
-  <v-app>
+  <v-app class="fill-height overflow-x-hidden ">
     <Menu :items="items" class="menu" />
-    <v-main dark class="light-blue accent-4">
-      <v-container fluid>
-        <v-row>
-          <v-col cols="3">
-            <Nav />
-          </v-col>
-          <v-col cols="9">
-            <v-card class="pa-5 fixed-container fill-height" rounded="lg">
-              <router-view></router-view>
-            </v-card>
-          </v-col>
-        </v-row>
+    <v-main dark class="light-blue accent-4 ">
+      <v-container>
+        <v-card class="pa-5 fill-height " rounded="lg">
+          <router-view></router-view>
+        </v-card>
       </v-container>
     </v-main>
   </v-app>
 </template>
-
 <script>
 import Menu from "@/components/shared/Menu";
-import Nav from "@/components/shared/NavigationDrawer";
+// import Nav from "@/components/shared/NavigationDrawer";
 export default {
   components: {
     Menu,
-    Nav,
+    // Nav,
   },
   computed: {
     items() {
