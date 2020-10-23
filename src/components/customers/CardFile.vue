@@ -86,7 +86,7 @@ export default {
             method: "post",
             url: "/folder",
             data: {
-              dir: value.path.split("\\"),
+              dir: value.path.split("/"),
               type: value.type,
               name:
                 "XML_CPNJ" +
