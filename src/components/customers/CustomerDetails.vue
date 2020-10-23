@@ -1,5 +1,5 @@
 <template>
-  <v-row dense>
+  <v-row v-if="Customer && Customer.children" dense>
     <v-col cols="12">
       <v-card flat>
         <div class="title font-weight-bold">
@@ -64,7 +64,7 @@ export default {
   computed: {
     Customer() {
       let customer;
-
+      console.log(this.$store.state.customers.customerSelected);
       if (this.$store.state.customers.customerSelected) {
         this.$store.state.customers.customerSelected.children.filter((item) => {
           if (parseInt(item.name) === parseInt(this.year)) {
@@ -104,7 +104,6 @@ export default {
     },
     filterYear(item) {
       this.year = parseInt(item);
-      console.log(this.year);
     },
   },
 };

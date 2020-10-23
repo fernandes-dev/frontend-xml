@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     getFiles(customer) {
-      console.log("merda");
       localStorage.setItem("customer", customer.path);
       // this.$store.commit("customers/request", ["customerSelected", null]);
 
