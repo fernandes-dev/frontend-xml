@@ -5,14 +5,30 @@
         <h1 class="mx-auto primary--text">Vedas XML</h1>
       </v-card-title>
       <v-card-text class="pb-0">
-        <v-row no-gutters>
-          <v-col cols="12">
-            <v-text-field v-model="email" dense outlined label="E-mail" />
-          </v-col>
-          <v-col cols="12">
-            <v-text-field dense outlined label="Senha" type="password" />
-          </v-col>
-        </v-row>
+        <v-form ref="login">
+          <v-row no-gutters>
+            <v-col cols="12">
+              <v-text-field
+                :rules="[(v) => !!v || 'obrigatório']"
+                v-model="contador_cnpj"
+                dense
+                outlined
+                label="CNPJ"
+              />
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                :rules="[(v) => !!v || 'obrigatório']"
+                v-model="contador_senha"
+                @keypress.enter="login"
+                dense
+                outlined
+                label="Senha"
+                type="password"
+              />
+            </v-col>
+          </v-row>
+        </v-form>
       </v-card-text>
       <v-card-actions class="px-4 pt-0">
         <v-row no-gutters>
@@ -20,7 +36,6 @@
             <v-btn
               depressed
               @click="login"
-              v-model="password"
               color="primary"
               :loading="false"
               block
@@ -37,15 +52,32 @@
 <script>
 export default {
   data: () => ({
-    email: null,
-    password: null
+    contador_cnpj: null,
+    contador_senha: null,
   }),
   methods: {
     login() {
-      console.log("logar");
-      this.$router.push("/home");
-    }
-  }
+      if (this.$refs.login.validate())
+        this.$store
+          .dispatch("count/request", {
+            url: "/login",
+            method: "post",
+            data: {
+              contador_cnpj: this.contador_cnpj,
+              contador_senha: this.contador_senha,
+            },
+            state: "profile",
+            noMsg: true,
+          })
+          .then((resp) => {
+            console.log(resp);
+            this.$store.commit("count/request", ["profile", resp.data]);
+            localStorage.setItem("token", resp.data.token);
+            this.$router.push("/home");
+          })
+          .catch((err) => this.$store.commit("message", [err, "error"]));
+    },
+  },
 };
 </script>
 

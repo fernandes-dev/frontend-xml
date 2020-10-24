@@ -8,8 +8,11 @@
               <div>
                 <small>Empresa</small>
                 <div>
-                  <span v-text="$route.params.cnpj"></span>
+                  <span v-text="client_name"></span>
                 </div>
+                <!-- <div>
+                  <span v-text="$route.params.cnpj"></span>
+                </div> -->
               </div>
             </v-col>
             <div>
@@ -32,7 +35,8 @@
         <v-row v-if="Customer.children">
           <v-col
             cols="12"
-            sm="2"
+            sm="3"
+            lg="2"
             v-for="(item, i) in Customer.children.filter(
               (item) => item.path.indexOf('.zip') < 0
             )"
@@ -53,18 +57,19 @@ export default {
   },
   mounted() {
     this.getFiles();
+    this.client_name = localStorage.getItem("cliente");
   },
   data() {
     return {
       isLoading: true,
       item: 1,
       year: new Date().getFullYear(),
+      client_name: null,
     };
   },
   computed: {
     Customer() {
       let customer;
-      console.log(this.$store.state.customers.customerSelected);
       if (this.$store.state.customers.customerSelected) {
         this.$store.state.customers.customerSelected.children.filter((item) => {
           if (parseInt(item.name) === parseInt(this.year)) {
@@ -81,20 +86,19 @@ export default {
     },
   },
   methods: {
-    async getFiles() {
-      if (this.$route.params.cnpj) {
-        await this.$store.dispatch("customers/request", {
-          state: "customerSelected",
-          method: "post",
-          url: "/folder-param",
-          data: {
-            getPath: JSON.stringify({
-              value: localStorage.getItem("customer"),
-            }),
-            depth: 3,
-          },
-        });
-      }
+    getFiles() {
+      this.$store.dispatch("customers/request", {
+        state: "customerSelected",
+        method: "post",
+        url: "/folder-param",
+        data: {
+          getPath: JSON.stringify({
+            value: localStorage.getItem("customer"),
+          }),
+          depth: 3,
+        },
+        noMsg: true,
+      });
     },
     selected(item) {
       if (item == this.year) {

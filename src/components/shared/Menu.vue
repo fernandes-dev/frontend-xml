@@ -4,8 +4,8 @@
       <v-avatar class="mr-10" color="grey darken-1" size="32"
         ><v-img src="@/assets/logo.png"></v-img
       ></v-avatar>
-      <v-btn v-for="link in links" :key="link" text>
-        {{ link }}
+      <v-btn @click="link.click" v-for="(link, i) in links" :key="i" text>
+        {{ link.title }}
       </v-btn>
       <v-spacer></v-spacer>
       <v-responsive max-width="260">
@@ -24,9 +24,22 @@
 <script>
 export default {
   data: () => ({
-    links: ["Minha conta", "Contabilidade", "Contato", "Atualizações"],
     drawer: false,
   }),
+  computed: {
+    links() {
+      return [
+        {
+          title: "Início",
+          click: () => this.$router.push("/home").catch(() => {}),
+        },
+        {
+          title: "Minha conta",
+          click: () => this.$router.push("/perfil").catch(() => {}),
+        },
+      ];
+    },
+  },
 };
 </script>
 

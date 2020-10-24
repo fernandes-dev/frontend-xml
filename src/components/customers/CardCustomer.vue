@@ -14,7 +14,7 @@
       </v-col>
       <v-col cols="8">
         <div>
-          <span v-text="customer.name"></span>
+          <span v-text="customer.client.clientes_razao"></span>
         </div>
       </v-col>
     </v-row>
@@ -28,12 +28,13 @@ export default {
   methods: {
     getFiles(customer) {
       localStorage.setItem("customer", customer.path);
-      // this.$store.commit("customers/request", ["customerSelected", null]);
+      localStorage.setItem("cliente", customer.client.clientes_razao);
 
       this.$store.dispatch("customers/request", {
         state: "customerSelected",
         method: "post",
         url: "/folder-param",
+        noMsg: true,
         data: {
           getPath: JSON.stringify({ value: customer.path }),
           depth: 1,

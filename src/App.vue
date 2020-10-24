@@ -1,20 +1,21 @@
 <template>
   <v-app>
+    <Loading />
     <router-view></router-view>
+    <MessageOrError />
   </v-app>
 </template>
 
 <script>
+import MessageOrError from "@/components/MessageOrError";
+import Loading from "@/components/Loading";
 export default {
   name: "App",
-  mounted() {
-    this.$store.dispatch("customers/request", {
-      state: "customers",
-      method: "get",
-      url: "/folder",
-    });
+  mounted() {},
+  components: {
+    MessageOrError,
+    Loading,
   },
-  components: {},
 
   data: () => ({
     //

@@ -45,10 +45,13 @@ export default {
   },
   computed: {
     size() {
-      let a = JSON.parse(localStorage.getItem("sizes")).children.filter(
+      let oldSize = JSON.parse(localStorage.getItem("sizes")).children.filter(
         (item) => item.name === this.month.name
       )[0]["size"];
-      return parseFloat(a);
+      let newSize =
+        parseFloat(oldSize.split(" ")[0]) + " " + oldSize.split(" ")[1];
+
+      return newSize;
     },
   },
   methods: {
@@ -85,6 +88,7 @@ export default {
           .dispatch("customers/request", {
             method: "post",
             url: "/folder",
+
             data: {
               dir: value.path.split("/"),
               type: value.type,
@@ -96,6 +100,7 @@ export default {
                 "_MES" +
                 this.month.name,
             },
+            noMsg: true,
           })
           .then((resp) => {
             this.downloadZip(resp.data);
@@ -124,6 +129,7 @@ export default {
               "_MES" +
               this.month.name,
           },
+          noMsg: true,
         })
         .then((response) => {
           this.forceFileDownload(
