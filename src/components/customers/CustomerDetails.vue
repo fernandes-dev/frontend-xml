@@ -1,6 +1,17 @@
 <template>
-  <v-row v-if="Customer && Customer.children" dense>
-    <v-col cols="12">
+  <v-row dense>
+    <div v-if="$store.state.loading" class="sk-chase d-flex justify-center">
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+    </div>
+    <v-col
+      v-if="Customer && Customer.children && !$store.state.loading"
+      cols="12"
+    >
       <v-card flat>
         <div class="title font-weight-bold">
           <v-row align="center">
@@ -47,6 +58,22 @@
         </v-row>
       </v-card>
     </v-col>
+    <v-col v-if="!Customer || (!Customer.children && !$store.state.loading)">
+      <v-card
+        height="50vh"
+        flat
+        class="d-flex flex-column justify-center align-center"
+      >
+        <h3>
+          Nenhum arquivo encontrado
+        </h3>
+        <div>
+          <v-icon>
+            mdi-alert-circle
+          </v-icon>
+        </div>
+      </v-card>
+    </v-col>
   </v-row>
 </template>
 <script>
@@ -70,7 +97,10 @@ export default {
   computed: {
     Customer() {
       let customer;
-      if (this.$store.state.customers.customerSelected) {
+      if (
+        this.$store.state.customers.customerSelected &&
+        this.$store.state.customers.customerSelected.children
+      ) {
         this.$store.state.customers.customerSelected.children.filter((item) => {
           if (parseInt(item.name) === parseInt(this.year)) {
             customer = item;

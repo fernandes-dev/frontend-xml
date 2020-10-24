@@ -26,13 +26,7 @@
     </div>
 
     <v-row v-else>
-      <v-col
-        cols="12"
-        sm="3"
-        lg="3"
-        v-for="(Customer, i) in Customers"
-        :key="i"
-      >
+      <v-col cols="12" sm="4" v-for="(Customer, i) in Customers" :key="i">
         <Customer :customer="Customer" />
       </v-col>
     </v-row>
