@@ -14,7 +14,7 @@
       <div class="sk-chase-dot"></div>
       <div class="sk-chase-dot"></div>
     </div> -->
-    <v-col v-if="Customer && Customer.children" cols="12">
+    <v-col v-if="Customer" cols="12">
       <v-card flat>
         <div class="title font-weight-bold">
           <v-row align="center">
@@ -46,7 +46,7 @@
           </v-row>
         </div>
         <v-divider></v-divider>
-        <v-row>
+        <v-row v-if="Customer.children">
           <v-col
             cols="12"
             sm="3"
