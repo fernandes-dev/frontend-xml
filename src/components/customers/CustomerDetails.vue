@@ -125,18 +125,25 @@ export default {
   },
   methods: {
     getFiles() {
-      this.$store.dispatch("customers/request", {
-        state: "customerSelected",
-        method: "post",
-        url: "/folder-param",
-        data: {
-          getPath: JSON.stringify({
-            value: localStorage.getItem("customer"),
-          }),
-          depth: 3,
-        },
-        noMsg: true,
-      });
+      this.$store
+        .dispatch("customers/request", {
+          state: "customerSelected",
+          method: "post",
+          url: "/folder-param",
+          data: {
+            getPath: JSON.stringify({
+              value: localStorage.getItem("customer"),
+            }),
+            depth: 3,
+          },
+          noMsg: true,
+        })
+        .then((resp) => {
+          this.$store.commit("customers/request", [
+            "customerSelected",
+            resp.data,
+          ]);
+        });
     },
     selected(item) {
       if (item == this.year) {
