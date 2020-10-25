@@ -20,7 +20,7 @@
       </v-col>
       <v-col cols="12">
         <v-btn dark color="light-blue accent-4" depressed block>
-          <span>{{ size }}</span>
+          <span>Baixar</span>
           <v-spacer></v-spacer>
           <v-icon>mdi-download-box</v-icon>
         </v-btn>
