@@ -27,7 +27,8 @@ export default {
     });
 
     this.$store
-      .dispatch("customers/request", {
+      .dispatch("count/request", {
+        state: "profile",
         method: "post",
         url: "/verify",
         noMsg: true,
