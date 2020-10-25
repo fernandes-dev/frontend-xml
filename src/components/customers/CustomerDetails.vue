@@ -1,9 +1,9 @@
 <template>
   <v-row dense>
-    <!-- <div
+    <div
       v-if="
-        (!notFound && !Customer) ||
-          (!notFound && Customer && !Customer.children)
+        (!notFound && !customer) ||
+          (!notFound && customer && !customer.children)
       "
       class="sk-chase d-flex justify-center"
     >
@@ -13,8 +13,8 @@
       <div class="sk-chase-dot"></div>
       <div class="sk-chase-dot"></div>
       <div class="sk-chase-dot"></div>
-    </div> -->
-    <v-col v-if="Customer" cols="12">
+    </div>
+    <v-col v-if="customer && customer.children" cols="12">
       <v-card flat>
         <div class="title font-weight-bold">
           <v-row align="center">
@@ -45,14 +45,13 @@
             </div>
           </v-row>
         </div>
-        a{{ Customer }}
         <v-divider></v-divider>
-        <v-row v-if="Customer.children">
+        <v-row>
           <v-col
             cols="12"
             sm="3"
             lg="2"
-            v-for="(item, i) in Customer.children.filter(
+            v-for="(item, i) in customer.children.filter(
               (item) => item.path.indexOf('.zip') < 0
             )"
             :key="i"
@@ -62,7 +61,7 @@
         </v-row>
       </v-card>
     </v-col>
-    <!-- <v-col v-if="notFound">
+    <v-col v-if="notFound">
       <v-card
         height="50vh"
         flat
@@ -77,7 +76,7 @@
           </v-icon>
         </div>
       </v-card>
-    </v-col> -->
+    </v-col>
   </v-row>
 </template>
 <script>
@@ -89,10 +88,10 @@ export default {
   mounted() {
     this.getFiles();
     this.client_name = localStorage.getItem("cliente");
-    // setTimeout(() => {
-    //   if ((this.Customer && !this.Customer.children) || !this.Customer)
-    //     this.notFound = true;
-    // }, 2500);
+    setTimeout(() => {
+      if ((this.Customer && !this.Customer.children) || !this.Customer)
+        this.notFound = true;
+    }, 2500);
   },
   data() {
     return {
@@ -104,7 +103,7 @@ export default {
     };
   },
   computed: {
-    Customer() {
+    customer() {
       let customer;
       if (
         this.$store.state.customers.customerSelected &&
@@ -125,8 +124,8 @@ export default {
     },
   },
   methods: {
-    async getFiles() {
-      await this.$store.dispatch("customers/request", {
+    getFiles() {
+      this.$store.dispatch("customers/request", {
         state: "customerSelected",
         method: "post",
         url: "/folder-param",
