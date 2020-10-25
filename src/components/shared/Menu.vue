@@ -35,7 +35,7 @@ export default {
         },
         {
           title: "Minha conta",
-          click: () => this.$router.push("/perfil").catch(() => {}),
+          click: () => this.$router.push("/profile").catch(() => {}),
         },
       ];
     },

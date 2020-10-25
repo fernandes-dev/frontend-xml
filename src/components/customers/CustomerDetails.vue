@@ -1,5 +1,19 @@
 <template>
   <v-row dense>
+    <div
+      v-if="
+        (!notFound && !Customer) ||
+          (!notFound && Customer && !Customer.children)
+      "
+      class="sk-chase d-flex justify-center"
+    >
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+    </div>
     <v-col v-if="Customer && Customer.children" cols="12">
       <v-card flat>
         <div class="title font-weight-bold">
@@ -47,7 +61,7 @@
         </v-row>
       </v-card>
     </v-col>
-    <v-col v-else>
+    <v-col v-if="notFound">
       <v-card
         height="50vh"
         flat
@@ -74,9 +88,14 @@ export default {
   mounted() {
     this.getFiles();
     this.client_name = localStorage.getItem("cliente");
+    setTimeout(() => {
+      if ((this.Customer && !this.Customer.children) || !this.Customer)
+        this.notFound = true;
+    }, 2500);
   },
   data() {
     return {
+      notFound: false,
       isLoading: true,
       item: 1,
       year: new Date().getFullYear(),
