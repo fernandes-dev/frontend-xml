@@ -41,13 +41,10 @@ export default {
   },
   computed: {
     size() {
-      let oldSize = JSON.parse(localStorage.getItem("sizes")).children.filter(
-        (item) => item.name === this.month.name
-      )[0]["size"];
-      let newSize =
-        parseFloat(oldSize.split(" ")[0]) + " " + oldSize.split(" ")[1];
+      let oldSize = this.month.size;
+      let newSize = parseFloat(oldSize.split(" ")[0]);
 
-      return newSize;
+      return parseFloat(newSize);
     },
   },
   methods: {
