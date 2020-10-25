@@ -1,6 +1,9 @@
 <template>
   <v-row dense>
-    <div v-if="$store.state.loading" class="sk-chase d-flex justify-center">
+    <div
+      v-if="$store.state.loading && !Customer"
+      class="sk-chase d-flex justify-center"
+    >
       <div class="sk-chase-dot"></div>
       <div class="sk-chase-dot"></div>
       <div class="sk-chase-dot"></div>
@@ -43,7 +46,7 @@
           </v-row>
         </div>
         <v-divider></v-divider>
-        <v-row v-if="Customer.children">
+        <v-row>
           <v-col
             cols="12"
             sm="3"
@@ -58,7 +61,7 @@
         </v-row>
       </v-card>
     </v-col>
-    <v-col v-if="!Customer || (!Customer.children && !$store.state.loading)">
+    <v-col v-if="!Customer && !$store.state.loading">
       <v-card
         height="50vh"
         flat
@@ -109,15 +112,15 @@ export default {
         localStorage.setItem("sizes", JSON.stringify(customer));
         return customer;
       }
-      return {};
+      return null;
     },
     getYears() {
       return this.$store.getters["customers/getYears"] || [];
     },
   },
   methods: {
-    getFiles() {
-      this.$store.dispatch("customers/request", {
+    async getFiles() {
+      await this.$store.dispatch("customers/request", {
         state: "customerSelected",
         method: "post",
         url: "/folder-param",
