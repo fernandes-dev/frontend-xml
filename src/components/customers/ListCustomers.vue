@@ -40,7 +40,7 @@ export default {
     Customer,
   },
   mounted() {
-    // this.$store.commit("customers/request", ["customerSelected", null]);
+    this.$store.commit("customers/request", ["customerSelected", null]);
   },
   computed: {
     Customers() {
