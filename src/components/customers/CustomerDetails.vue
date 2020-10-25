@@ -1,20 +1,6 @@
 <template>
   <v-row dense>
-    <div
-      v-if="$store.state.loading && !Customer"
-      class="sk-chase d-flex justify-center"
-    >
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-    </div>
-    <v-col
-      v-if="Customer && Customer.children && !$store.state.loading"
-      cols="12"
-    >
+    <v-col v-if="Customer && Customer.children" cols="12">
       <v-card flat>
         <div class="title font-weight-bold">
           <v-row align="center">
@@ -61,7 +47,7 @@
         </v-row>
       </v-card>
     </v-col>
-    <v-col v-if="!Customer && !$store.state.loading">
+    <v-col v-else>
       <v-card
         height="50vh"
         flat
