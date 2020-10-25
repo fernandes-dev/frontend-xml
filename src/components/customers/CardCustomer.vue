@@ -2,19 +2,20 @@
   <v-card
     link
     flat
+    height="100px"
     class="pa-3"
     color="grey lighten-5"
     @click="getFiles(customer)"
   >
-    <v-row align="center" justify="center" class="d-flex flex-colunm">
-      <v-col cols="6">
-        <v-avatar tile size="80">
+    <v-row class="pa-3">
+      <v-col cols="4" class="d-flex justify-center pa-0">
+        <v-avatar tile size="40">
           <v-img src="@/assets/icons/company-folder.png"></v-img>
         </v-avatar>
       </v-col>
-      <v-col cols="8">
+      <v-col cols="8" class="pa-0">
         <div>
-          <span v-text="customer.name"></span>
+          <span v-text="customer.client.clientes_razao"></span>
         </div>
       </v-col>
     </v-row>
@@ -27,14 +28,14 @@ export default {
   },
   methods: {
     getFiles(customer) {
-      console.log("merda");
       localStorage.setItem("customer", customer.path);
-      // this.$store.commit("customers/request", ["customerSelected", null]);
+      localStorage.setItem("cliente", customer.client.clientes_razao);
 
       this.$store.dispatch("customers/request", {
         state: "customerSelected",
         method: "post",
         url: "/folder-param",
+        noMsg: true,
         data: {
           getPath: JSON.stringify({ value: customer.path }),
           depth: 1,

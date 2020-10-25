@@ -83,7 +83,7 @@
 <script>
 export default {
   data: () => ({
-    links: ["Minha conta", "Contabilidade", "Contato", "Atualizações"],
+    links: ["Minha conta"],
   }),
   methods: {
     goXml(client) {

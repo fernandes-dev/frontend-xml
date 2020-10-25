@@ -1,9 +1,13 @@
 <template>
-  <v-app class="fill-height overflow-x-hidden ">
-    <Menu :items="items" class="menu" />
-    <v-main dark class="light-blue accent-4 ">
-      <v-container>
-        <v-card class="pa-5 fill-height " rounded="lg">
+  <v-app class="fill-height">
+    <Menu :items="items" />
+    <v-main dark class="light-blue accent-4 ma-0">
+      <v-container class="pa-0">
+        <v-card
+          class="pa-5 fill-height overflow-y-auto"
+          height="85vh"
+          rounded="lg"
+        >
           <router-view></router-view>
         </v-card>
       </v-container>
@@ -14,6 +18,28 @@
 import Menu from "@/components/shared/Menu";
 // import Nav from "@/components/shared/NavigationDrawer";
 export default {
+  mounted() {
+    this.$store.dispatch("customers/request", {
+      state: "customers",
+      method: "get",
+      url: "/folder",
+      noMsg: true,
+    });
+
+    this.$store
+      .dispatch("customers/request", {
+        method: "post",
+        url: "/verify",
+        noMsg: true,
+      })
+      .catch((err) => {
+        this.$store.commit("message", [err, "error"]);
+        localStorage.clear();
+        setTimeout(() => {
+          this.$router.replace("/");
+        }, 3000);
+      });
+  },
   components: {
     Menu,
     // Nav,
@@ -38,10 +64,7 @@ export default {
         {
           icon: "mdi-exit-to-app",
           text: "Sair",
-          click: () => {
-            localStorage.clear();
-            location.reload();
-          },
+          click: () => {},
         },
       ];
     },

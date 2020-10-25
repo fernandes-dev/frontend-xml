@@ -1,6 +1,17 @@
 <template>
   <v-row dense>
-    <v-col cols="12">
+    <div v-if="$store.state.loading" class="sk-chase d-flex justify-center">
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+    </div>
+    <v-col
+      v-if="Customer && Customer.children && !$store.state.loading"
+      cols="12"
+    >
       <v-card flat>
         <div class="title font-weight-bold">
           <v-row align="center">
@@ -8,8 +19,11 @@
               <div>
                 <small>Empresa</small>
                 <div>
-                  <span v-text="$route.params.cnpj"></span>
+                  <span v-text="client_name"></span>
                 </div>
+                <!-- <div>
+                  <span v-text="$route.params.cnpj"></span>
+                </div> -->
               </div>
             </v-col>
             <div>
@@ -32,7 +46,8 @@
         <v-row v-if="Customer.children">
           <v-col
             cols="12"
-            sm="2"
+            sm="3"
+            lg="2"
             v-for="(item, i) in Customer.children.filter(
               (item) => item.path.indexOf('.zip') < 0
             )"
@@ -41,6 +56,22 @@
             <CardFile @download="getFiles" :month="item" :year="year" />
           </v-col>
         </v-row>
+      </v-card>
+    </v-col>
+    <v-col v-if="!Customer || (!Customer.children && !$store.state.loading)">
+      <v-card
+        height="50vh"
+        flat
+        class="d-flex flex-column justify-center align-center"
+      >
+        <h3>
+          Nenhum arquivo encontrado
+        </h3>
+        <div>
+          <v-icon>
+            mdi-alert-circle
+          </v-icon>
+        </div>
       </v-card>
     </v-col>
   </v-row>
@@ -53,19 +84,23 @@ export default {
   },
   mounted() {
     this.getFiles();
+    this.client_name = localStorage.getItem("cliente");
   },
   data() {
     return {
       isLoading: true,
       item: 1,
       year: new Date().getFullYear(),
+      client_name: null,
     };
   },
   computed: {
     Customer() {
       let customer;
-
-      if (this.$store.state.customers.customerSelected) {
+      if (
+        this.$store.state.customers.customerSelected &&
+        this.$store.state.customers.customerSelected.children
+      ) {
         this.$store.state.customers.customerSelected.children.filter((item) => {
           if (parseInt(item.name) === parseInt(this.year)) {
             customer = item;
@@ -81,20 +116,19 @@ export default {
     },
   },
   methods: {
-    async getFiles() {
-      if (this.$route.params.cnpj) {
-        await this.$store.dispatch("customers/request", {
-          state: "customerSelected",
-          method: "post",
-          url: "/folder-param",
-          data: {
-            getPath: JSON.stringify({
-              value: localStorage.getItem("customer"),
-            }),
-            depth: 3,
-          },
-        });
-      }
+    getFiles() {
+      this.$store.dispatch("customers/request", {
+        state: "customerSelected",
+        method: "post",
+        url: "/folder-param",
+        data: {
+          getPath: JSON.stringify({
+            value: localStorage.getItem("customer"),
+          }),
+          depth: 3,
+        },
+        noMsg: true,
+      });
     },
     selected(item) {
       if (item == this.year) {
@@ -104,7 +138,6 @@ export default {
     },
     filterYear(item) {
       this.year = parseInt(item);
-      console.log(this.year);
     },
   },
 };
