@@ -10,11 +10,6 @@ const routes = [
     component: () => import("@/views/Login.vue"),
   },
   {
-    path: "/template",
-    name: "Template",
-    component: () => import("@/views/Template.vue"),
-  },
-  {
     path: "/home",
     name: "Home",
     component: () => import("@/views/Home.vue"),
@@ -41,11 +36,6 @@ const routes = [
         path: "/profile",
         name: "profile",
         component: () => import("@/views/home/Profile.vue"),
-      },
-      {
-        path: "/xml/:cnpj",
-        name: "xml",
-        component: () => import("@/views/home/Xml.vue"),
       },
     ],
   },

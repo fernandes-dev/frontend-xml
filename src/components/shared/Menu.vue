@@ -8,15 +8,10 @@
         {{ link.title }}
       </v-btn>
       <v-spacer></v-spacer>
-      <v-responsive max-width="260">
-        <v-text-field
-          dense
-          flat
-          hide-details
-          rounded
-          solo-inverted
-        ></v-text-field>
-      </v-responsive>
+      <v-btn text @click="exitApp">
+        <span>Sair</span>
+        <v-icon>mdi-exit-to-app</v-icon>
+      </v-btn>
     </v-container>
   </v-app-bar>
 </template>
@@ -38,6 +33,12 @@ export default {
           click: () => this.$router.push("/profile").catch(() => {}),
         },
       ];
+    },
+  },
+  methods: {
+    exitApp() {
+      localStorage.clear();
+      this.$router.replace("/");
     },
   },
 };

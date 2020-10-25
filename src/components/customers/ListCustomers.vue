@@ -6,6 +6,7 @@
         <v-responsive max-width="260">
           <v-text-field
             dense
+            v-model="filter"
             flat
             label="Buscar"
             append-icon="mdi-magnify"
@@ -26,8 +27,13 @@
     </div>
 
     <v-row v-else>
-      <v-col cols="12" sm="4" v-for="(Customer, i) in Customers" :key="i">
-        <Customer :customer="Customer" />
+      <v-col
+        cols="12"
+        sm="4"
+        v-for="(customer, i) in customersFiltered"
+        :key="i"
+      >
+        <Customer :customer="customer" />
       </v-col>
     </v-row>
   </div>
@@ -42,12 +48,31 @@ export default {
   mounted() {
     this.$store.commit("customers/request", ["customerSelected", null]);
   },
+  data: () => ({
+    filter: "",
+  }),
   computed: {
-    Customers() {
+    customers() {
       if (this.$store.state.customers.customers) {
         return this.$store.state.customers.customers.children || {};
       }
       return {};
+    },
+    customersFiltered() {
+      if (this.customers && this.customers.length > 0) {
+        if (this.filter) {
+          console.log();
+          return this.customers.filter(
+            (c) =>
+              c.client.clientes_razao
+                .toLowerCase()
+                .indexOf(this.filter.toLowerCase()) >= 0
+          );
+        }
+        return this.customers;
+      }
+
+      return [];
     },
   },
   methods: {},

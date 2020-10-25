@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     script: 'npm',
-    args: 'run	serve',
+    args: 'run	deploy',
     watch: false,
   }
   ],
