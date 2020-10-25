@@ -52,7 +52,7 @@
             sm="3"
             lg="2"
             v-for="(item, i) in customer.children.filter(
-              (item) => item.path.indexOf('.zip') < 0
+              (item) => item.type === 'directory'
             )"
             :key="i"
           >
@@ -89,7 +89,7 @@ export default {
     this.getFiles();
     this.client_name = localStorage.getItem("cliente");
     setTimeout(() => {
-      if ((this.Customer && !this.Customer.children) || !this.Customer)
+      if ((this.customer && !this.customer.children) || !this.customer)
         this.notFound = true;
     }, 2500);
   },

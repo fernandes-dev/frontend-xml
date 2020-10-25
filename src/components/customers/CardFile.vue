@@ -5,11 +5,9 @@
     :loading="isLoading"
     class="mx-5"
     hover
+    @click="zipFolder(month)"
   >
-    <v-row
-      align="center"
-      class="grey lighten-5 d-flex flex-colunm text-center pa-5 "
-    >
+    <v-row class="grey lighten-5 text-center">
       <v-col cols="12">
         <v-avatar tile size="50">
           <v-img src="@/assets/icons/month-folder.png"></v-img>
@@ -20,15 +18,13 @@
           <span v-text="getMonth(month.name)"></span>
         </div>
       </v-col>
-      <v-btn
-        dark
-        color="light-blue accent-4"
-        depressed
-        block
-        @click="zipFolder(month)"
-      >
-        Baixar {{ size }} <v-icon size="20">mdi-download-box</v-icon>
-      </v-btn>
+      <v-col cols="12">
+        <v-btn dark color="light-blue accent-4" depressed block>
+          <span>{{ size }}</span>
+          <v-spacer></v-spacer>
+          <v-icon>mdi-download-box</v-icon>
+        </v-btn>
+      </v-col>
     </v-row>
   </v-card>
 </template>
