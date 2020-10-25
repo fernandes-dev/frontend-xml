@@ -88,10 +88,10 @@ export default {
   mounted() {
     this.getFiles();
     this.client_name = localStorage.getItem("cliente");
-    // setTimeout(() => {
-    //   if ((this.customer && !this.customer.children) || !this.customer)
-    //     this.notFound = true;
-    // }, 2500);
+    setTimeout(() => {
+      if ((this.customer && !this.customer.children) || !this.customer)
+        this.notFound = true;
+    }, 2500);
   },
   data() {
     return {

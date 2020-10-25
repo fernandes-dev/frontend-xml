@@ -38,7 +38,7 @@ export default {
         noMsg: true,
         data: {
           getPath: JSON.stringify({ value: customer.path }),
-          depth: 1,
+          depth: 3,
         },
       });
       this.$router.push({
