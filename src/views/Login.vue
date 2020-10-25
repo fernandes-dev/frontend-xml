@@ -1,51 +1,55 @@
 <template>
   <v-app class="bg-login">
-    <v-card class="ma-auto py-10 px-8 col-10 col-sm-8 col-md-4 col-xl-2">
-      <v-card-title class="pt-0 pb-10">
-        <h1 class="mx-auto primary--text">Vedas XML</h1>
-      </v-card-title>
-      <v-card-text class="pb-0">
-        <v-form ref="login">
-          <v-row no-gutters>
-            <v-col cols="12">
-              <v-text-field
-                :rules="[(v) => !!v || 'obrigatório']"
-                v-model="contador_cnpj"
-                dense
-                outlined
-                label="CNPJ"
-              />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                :rules="[(v) => !!v || 'obrigatório']"
-                v-model="contador_senha"
-                @keypress.enter="login"
-                dense
-                outlined
-                label="Senha"
-                type="password"
-              />
-            </v-col>
-          </v-row>
-        </v-form>
-      </v-card-text>
-      <v-card-actions class="px-4 pt-0">
-        <v-row no-gutters>
-          <v-col cols="12">
-            <v-btn
-              depressed
-              @click="login"
-              color="primary"
-              :loading="false"
-              block
-            >
-              Entrar
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-card-actions>
-    </v-card>
+    <v-row>
+      <v-col class="ma-auto " cols="10" sm="8" md="4" xl="2">
+        <v-card class="py-10 px-8">
+          <v-card-title class="pt-0 pb-10">
+            <h1 class="mx-auto primary--text">Vedas XML</h1>
+          </v-card-title>
+          <v-card-text class="pb-0">
+            <v-form ref="login">
+              <v-row no-gutters>
+                <v-col cols="12">
+                  <v-text-field
+                    :rules="[(v) => !!v || 'obrigatório']"
+                    v-model="contador_cnpj"
+                    dense
+                    outlined
+                    label="CNPJ"
+                  />
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    :rules="[(v) => !!v || 'obrigatório']"
+                    v-model="contador_senha"
+                    @keypress.enter="login"
+                    dense
+                    outlined
+                    label="Senha"
+                    type="password"
+                  />
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-card-text>
+          <v-card-actions class="px-4 pt-0">
+            <v-row no-gutters>
+              <v-col cols="12">
+                <v-btn
+                  depressed
+                  @click="login"
+                  color="primary"
+                  :loading="false"
+                  block
+                >
+                  Entrar
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-app>
 </template>
 
