@@ -114,7 +114,7 @@
             url: "/folder",
             responseType: "blob",
             data: {
-              dir: value.split("\\"),
+              dir: value.split("/"),
               type: "zip",
               name:
                 "XML_CPNJ" +
