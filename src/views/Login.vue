@@ -54,34 +54,35 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      contador_cnpj: null,
-      contador_senha: null,
-    }),
-    methods: {
-      login() {
-        if (this.$refs.login.validate())
-          this.$store
-            .dispatch("count/request", {
-              url: "/login",
-              method: "post",
-              data: {
-                contador_cnpj: this.contador_cnpj,
-                contador_senha: this.contador_senha,
-              },
-              state: "profile",
-              noMsg: true,
-            })
-            .then((resp) => {
-              this.$store.commit("count/request", ["profile", resp.data]);
-              localStorage.setItem("token", resp.data.token);
-              this.$router.push("/home");
-            })
-            .catch((err) => this.$store.commit("message", [err, "error"]));
-      },
+export default {
+  data: () => ({
+    contador_cnpj: null,
+    contador_senha: null,
+  }),
+  methods: {
+    login() {
+      if (this.$refs.login.validate()) {
+        this.$store
+          .dispatch('count/request', {
+            url: '/login',
+            method: 'post',
+            data: {
+              contador_cnpj: this.contador_cnpj,
+              contador_senha: this.contador_senha,
+            },
+            state: 'profile',
+            noMsg: true,
+          })
+          .then((resp) => {
+            this.$store.commit('count/request', ['profile', resp.data]);
+            localStorage.setItem('token', resp.data.token);
+            this.$router.push('/home');
+          })
+          .catch((err) => this.$store.commit('message', [err, 'error']));
+      }
     },
-  };
+  },
+};
 </script>
 
 <style>

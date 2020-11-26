@@ -24,20 +24,20 @@
 <script>
 export default {
   props: {
-    text: String
+    text: String,
   },
   methods: {
     exit() {
-      this.$store.commit("request", ["exitModal", false]);
+      this.$store.commit('request', ['exitModal', false]);
       localStorage.clear();
       location.reload(true);
-    }
+    },
   },
   computed: {
     exitModal() {
       return this.$store.state.exitModal;
-    }
-  }
+    },
+  },
 };
 </script>
 

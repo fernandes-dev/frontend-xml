@@ -40,42 +40,42 @@
 </template>
 
 <script>
-  import Customer from "@/components/customers/CardCustomer.vue";
-  export default {
-    components: {
-      Customer,
-    },
-    mounted() {
-      this.$store.commit("customers/request", ["customerSelected", null]);
-    },
-    data: () => ({
-      filter: "",
-    }),
-    computed: {
-      customers() {
-        if (this.$store.state.customers.customers) {
-          return this.$store.state.customers.customers.children || {};
-        }
-        return {};
-      },
-      customersFiltered() {
-        if (this.customers && this.customers.length > 0) {
-          if (this.filter) {
-            return this.customers.filter(
-              (c) =>
-                c.client.clientes_razao
-                  .toLowerCase()
-                  .indexOf(this.filter.toLowerCase()) >= 0
-            );
-          }
-          return this.customers;
-        }
+import Customer from '@/components/customers/CardCustomer.vue';
 
-        return [];
-      },
+export default {
+  components: {
+    Customer,
+  },
+  mounted() {
+    this.$store.commit('customers/request', ['customerSelected', null]);
+  },
+  data: () => ({
+    filter: '',
+  }),
+  computed: {
+    customers() {
+      if (this.$store.state.customers.customers) {
+        return this.$store.state.customers.customers.children || {};
+      }
+      return {};
     },
-    methods: {},
-  };
+    customersFiltered() {
+      if (this.customers && this.customers.length > 0) {
+        if (this.filter) {
+          return this.customers.filter(
+            (c) => c.client.clientes_razao
+              .toLowerCase()
+              .indexOf(this.filter.toLowerCase()) >= 0,
+          );
+        }
+        return this.customers;
+      }
+
+      return [];
+    },
+  },
+  methods: {},
+};
 </script>
 
 <style>

@@ -29,120 +29,107 @@
   </v-card>
 </template>
 <script>
-  export default {
-    props: {
-      month: Object,
-      year: Number,
+export default {
+  mounted() {
+    if (window.navigator.userAgent.indexOf('Windows') >= 0) {
+      this.isWindows = true;
+    }
+  },
+  props: {
+    month: Object,
+    year: Number,
+  },
+  data() {
+    return {
+      isLoading: false,
+      isWindows: false,
+    };
+  },
+  computed: {
+    size() {
+      const oldSize = this.month.size;
+      const newSize = parseFloat(oldSize.split(' ')[0]);
+
+      return parseFloat(newSize);
     },
-    data() {
-      return {
-        isLoading: false,
-      };
+  },
+  methods: {
+    getMonth(month) {
+      const monthNames = [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro',
+      ];
+
+      return monthNames[parseInt(month) - 1];
     },
-    computed: {
-      size() {
-        let oldSize = this.month.size;
-        let newSize = parseFloat(oldSize.split(" ")[0]);
-
-        return parseFloat(newSize);
-      },
+    forceFileDownload(response, title) {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', title);
+      document.body.appendChild(link);
+      link.click();
     },
-    methods: {
-      getMonth(month) {
-        const monthNames = [
-          "Janeiro",
-          "Fevereiro",
-          "Março",
-          "Abril",
-          "Maio",
-          "Junho",
-          "Julho",
-          "Agosto",
-          "Setembro",
-          "Outubro",
-          "Novembro",
-          "Dezembro",
-        ];
-
-        return monthNames[parseInt(month) - 1];
-      },
-      forceFileDownload(response, title) {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", title);
-        document.body.appendChild(link);
-        link.click();
-      },
-      zipFolder(value) {
-        this.isLoading = true;
-        if (value && value.path.indexOf(".zip") < 0) {
-          this.$store
-            .dispatch("customers/request", {
-              method: "post",
-              url: "/folder",
-
-              data: {
-                dir: value.path.split("/"),
-                type: value.type,
-                name:
-                  "XML_CPNJ" +
-                  this.$route.params.cnpj +
-                  "_ANO" +
-                  this.year +
-                  "_MES" +
-                  this.month.name,
-              },
-              noMsg: true,
-            })
-            .then((resp) => {
-              setTimeout(() => {
-                this.downloadZip(resp.data);
-                this.isLoading = false;
-              }, 3000);
-            });
-        } else if (value) {
-          this.downloadZip(value.path);
-        }
-      },
-      downloadZip(value) {
-        this.isLoading = true;
-
+    zipFolder(value) {
+      this.isLoading = true;
+      if (value && value.path.indexOf('.zip') < 0) {
         this.$store
-          .dispatch("customers/request", {
-            method: "post",
-            url: "/folder",
-            responseType: "blob",
+          .dispatch('customers/request', {
+            method: 'post',
+            url: '/folder',
             data: {
-              dir: value.split("/"),
-              type: "zip",
-              name:
-                "XML_CPNJ" +
-                this.$route.params.cnpj +
-                "_ANO" +
-                this.year +
-                "_MES" +
-                this.month.name,
+              dir: this.isWindows ? value.path.split('\\') : value.path.split('/'),
+              type: value.type,
+              name: `XML_CPNJ${this.$route.params.cnpj}_ANO${this.year}_MES${this.month.name}`,
             },
             noMsg: true,
           })
-          .then((response) => {
-            this.forceFileDownload(
-              response,
-              "XML_CPNJ" +
-                this.$route.params.cnpj +
-                "_ANO" +
-                this.year +
-                "_MES" +
-                this.month.name +
-                ".zip"
-            );
-            this.$emit("download");
-            this.isLoading = false;
+          .then(resp => {
+            setTimeout(() => {
+              this.downloadZip(resp.data);
+              this.isLoading = false;
+            }, 3000);
           });
-      },
+      } else if (value) {
+        this.downloadZip(value.path);
+      }
     },
-  };
+    downloadZip(value) {
+      this.isLoading = true;
+
+      this.$store
+        .dispatch('customers/request', {
+          method: 'post',
+          url: '/folder',
+          responseType: 'blob',
+          data: {
+            dir: this.isWindows ? value.split('\\') : value.split('/'),
+            type: 'zip',
+            name: `XML_CPNJ${this.$route.params.cnpj}_ANO${this.year}_MES${this.month.name}`,
+          },
+          noMsg: true,
+        })
+        .then(response => {
+          this.forceFileDownload(
+            response,
+            `XML_CPNJ${this.$route.params.cnpj}_ANO${this.year}_MES${this.month.name}.zip`,
+          );
+          this.$emit('download');
+          this.isLoading = false;
+        });
+    },
+  },
+};
 </script>
 
 <style></style>

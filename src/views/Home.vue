@@ -15,29 +15,29 @@
   </v-app>
 </template>
 <script>
-import Menu from "@/components/shared/Menu";
+import Menu from '@/components/shared/Menu';
 // import Nav from "@/components/shared/NavigationDrawer";
 export default {
   mounted() {
-    this.$store.dispatch("customers/request", {
-      state: "customers",
-      method: "get",
-      url: "/folder",
+    this.$store.dispatch('customers/request', {
+      state: 'customers',
+      method: 'get',
+      url: '/folder',
       noMsg: true,
     });
 
     this.$store
-      .dispatch("count/request", {
-        state: "profile",
-        method: "post",
-        url: "/verify",
+      .dispatch('count/request', {
+        state: 'profile',
+        method: 'post',
+        url: '/verify',
         noMsg: true,
       })
       .catch((err) => {
-        this.$store.commit("message", [err, "error"]);
+        this.$store.commit('message', [err, 'error']);
         localStorage.clear();
         setTimeout(() => {
-          this.$router.replace("/");
+          this.$router.replace('/');
         }, 3000);
       });
   },
@@ -49,22 +49,22 @@ export default {
     items() {
       return [
         {
-          icon: "mdi-account-multiple",
-          text: "Clientes",
+          icon: 'mdi-account-multiple',
+          text: 'Clientes',
           click: () => {
-            this.$router.push("/clients").catch(() => {});
+            this.$router.push('/clients').catch(() => {});
           },
         },
         {
-          icon: "mdi-account",
-          text: "Perfil",
+          icon: 'mdi-account',
+          text: 'Perfil',
           click: () => {
-            this.$router.push("/profile").catch(() => {});
+            this.$router.push('/profile').catch(() => {});
           },
         },
         {
-          icon: "mdi-exit-to-app",
-          text: "Sair",
+          icon: 'mdi-exit-to-app',
+          text: 'Sair',
           click: () => {},
         },
       ];

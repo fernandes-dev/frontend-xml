@@ -7,10 +7,11 @@
 </template>
 
 <script>
-import MessageOrError from "@/components/MessageOrError";
-import Loading from "@/components/Loading";
+import MessageOrError from '@/components/MessageOrError';
+import Loading from '@/components/Loading';
+
 export default {
-  name: "App",
+  name: 'App',
   mounted() {},
   components: {
     MessageOrError,

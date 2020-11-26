@@ -50,17 +50,17 @@
 export default {
   mounted() {
     this.$store
-      .dispatch("count/request", {
-        state: "profile",
-        method: "post",
-        url: "/verify",
+      .dispatch('count/request', {
+        state: 'profile',
+        method: 'post',
+        url: '/verify',
         noMsg: true,
       })
       .catch((err) => {
-        this.$store.commit("message", [err, "error"]);
+        this.$store.commit('message', [err, 'error']);
         localStorage.clear();
         setTimeout(() => {
-          this.$router.replace("/");
+          this.$router.replace('/');
         }, 3000);
       });
   },
@@ -71,10 +71,10 @@ export default {
   },
   methods: {
     saveProfile() {
-      this.$store.dispatch("count/request", {
-        state: "profile",
-        method: "put",
-        url: "/update-profile",
+      this.$store.dispatch('count/request', {
+        state: 'profile',
+        method: 'put',
+        url: '/update-profile',
         data: this.profile,
       });
     },
