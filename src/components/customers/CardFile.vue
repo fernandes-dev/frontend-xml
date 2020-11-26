@@ -88,7 +88,7 @@ export default {
             method: 'post',
             url: '/folder',
             data: {
-              dir: this.isWindows ? value.path.split('\\') : value.path.split('/'),
+              dir: value.path.split('/'),
               type: value.type,
               name: `XML_CPNJ${this.$route.params.cnpj}_ANO${this.year}_MES${this.month.name}`,
             },
@@ -113,7 +113,7 @@ export default {
           url: '/folder',
           responseType: 'blob',
           data: {
-            dir: this.isWindows ? value.split('\\') : value.split('/'),
+            dir: value.split('/'),
             type: 'zip',
             name: `XML_CPNJ${this.$route.params.cnpj}_ANO${this.year}_MES${this.month.name}`,
           },
