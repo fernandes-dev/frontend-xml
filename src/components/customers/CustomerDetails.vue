@@ -81,17 +81,17 @@
   </v-row>
 </template>
 <script>
-import CardFile from "@/components/customers/CardFile.vue";
+import CardFile from '@/components/customers/CardFile.vue';
+
 export default {
   components: {
     CardFile,
   },
   mounted() {
     this.getFiles();
-    this.client_name = localStorage.getItem("cliente");
+    this.client_name = localStorage.getItem('cliente');
     setTimeout(() => {
-      if ((this.customer && !this.customer.children) || !this.customer)
-        this.notFound = true;
+      if ((this.customer && !this.customer.children) || !this.customer) { this.notFound = true; }
     }, 2500);
   },
   data() {
@@ -107,50 +107,50 @@ export default {
     customer() {
       let customer;
       if (
-        this.$store.state.customers.customerSelected &&
-        this.$store.state.customers.customerSelected.children
+        this.$store.state.customers.customerSelected
+        && this.$store.state.customers.customerSelected.children
       ) {
         this.$store.state.customers.customerSelected.children.filter((item) => {
           if (parseInt(item.name) === parseInt(this.year)) {
             customer = item;
           }
         });
-        localStorage.setItem("sizes", JSON.stringify(customer));
+        localStorage.setItem('sizes', JSON.stringify(customer));
         return customer;
       }
       return null;
     },
     getYears() {
-      return this.$store.getters["customers/getYears"] || [];
+      return this.$store.getters['customers/getYears'] || [];
     },
   },
   methods: {
     getFiles() {
       this.$store
-        .dispatch("customers/request", {
-          state: "customerSelected",
-          method: "post",
-          url: "/folder-param",
+        .dispatch('customers/request', {
+          state: 'customerSelected',
+          method: 'post',
+          url: '/folder-param',
           data: {
             getPath: JSON.stringify({
-              value: localStorage.getItem("customer"),
+              value: localStorage.getItem('customer'),
             }),
             depth: 3,
           },
           noMsg: true,
         })
         .then((resp) => {
-          this.$store.commit("customers/request", [
-            "customerSelected",
+          this.$store.commit('customers/request', [
+            'customerSelected',
             resp.data,
           ]);
         });
     },
     selected(item) {
       if (item == this.year) {
-        return "light-blue accent-4";
+        return 'light-blue accent-4';
       }
-      return "grey lighten-5";
+      return 'grey lighten-5';
     },
     filterYear(item) {
       this.year = parseInt(item);

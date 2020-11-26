@@ -25,12 +25,12 @@ export default {
     links() {
       return [
         {
-          title: "Início",
-          click: () => this.$router.push("/home").catch(() => {}),
+          title: 'Início',
+          click: () => this.$router.push('/home').catch(() => {}),
         },
         {
-          title: "Minha conta",
-          click: () => this.$router.push("/profile").catch(() => {}),
+          title: 'Minha conta',
+          click: () => this.$router.push('/profile').catch(() => {}),
         },
       ];
     },
@@ -38,7 +38,7 @@ export default {
   methods: {
     exitApp() {
       localStorage.clear();
-      this.$router.replace("/");
+      this.$router.replace('/');
     },
   },
 };

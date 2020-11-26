@@ -1,19 +1,19 @@
-import actionsGlobal from "../actions";
-import mutationsGlobal from "../mutations";
+import actionsGlobal from '../actions';
+import mutationsGlobal from '../mutations';
 
 const utils = {
   namespaced: true,
   state: () => ({
     snack: false,
-    type: null
+    type: null,
   }),
   mutations: {
     ...mutationsGlobal,
     closeSnack(state) {
       state.snack = false;
-    }
+    },
   },
-  actions: { ...actionsGlobal }
+  actions: { ...actionsGlobal },
 };
 
 export default utils;

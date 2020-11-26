@@ -28,13 +28,13 @@ export default {
   },
   methods: {
     getFiles(customer) {
-      localStorage.setItem("customer", customer.path);
-      localStorage.setItem("cliente", customer.client.clientes_razao);
+      localStorage.setItem('customer', customer.path);
+      localStorage.setItem('cliente', customer.client.clientes_razao);
 
-      this.$store.dispatch("customers/request", {
-        state: "customerSelected",
-        method: "post",
-        url: "/folder-param",
+      this.$store.dispatch('customers/request', {
+        state: 'customerSelected',
+        method: 'post',
+        url: '/folder-param',
         noMsg: true,
         data: {
           getPath: JSON.stringify({ value: customer.path }),
@@ -42,7 +42,7 @@ export default {
         },
       });
       this.$router.push({
-        name: "customer-details",
+        name: 'customer-details',
         params: { cnpj: customer.name },
       });
     },

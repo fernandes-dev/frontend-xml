@@ -13,16 +13,16 @@
 export default {
   methods: {
     input() {
-      this.$store.commit("utils/request", ["snack", !this.snack]);
-      if (!this.snack) this.$store.commit("request", ["message", null]);
+      this.$store.commit('utils/request', ['snack', !this.snack]);
+      if (!this.snack) this.$store.commit('request', ['message', null]);
     },
     close() {
-      this.$store.commit("utils/closeSnack");
+      this.$store.commit('utils/closeSnack');
     },
   },
   computed: {
     color() {
-      let color = this.type == "error" ? "red lighten-1" : "green";
+      const color = this.type == 'error' ? 'red lighten-1' : 'green';
       return color;
     },
     snack: {
@@ -35,7 +35,7 @@ export default {
       return this.$store.state.message;
     },
     type() {
-      return this.$store.state.utils.type || "error";
+      return this.$store.state.utils.type || 'error';
     },
   },
 };
