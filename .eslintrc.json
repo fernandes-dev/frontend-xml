@@ -21,6 +21,8 @@
     "rules": {
       "radix":"off",
       "arrow-parens": "off",
-      "no-param-reassign": "off"
+      "no-param-reassign": "off",
+      "import/no-unresolved": "off",
+      "operator-linebreak": "off"
     }
 }
