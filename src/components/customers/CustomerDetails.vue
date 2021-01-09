@@ -1,10 +1,7 @@
 <template>
   <v-row dense>
     <div
-      v-if="
-        (!notFound && !customer) ||
-          (!notFound && customer && !customer.children)
-      "
+      v-if="(!notFound && !customer) || (!notFound && customer && !customer.children)"
       class="sk-chase d-flex justify-center"
     >
       <div class="sk-chase-dot"></div>
@@ -52,9 +49,7 @@
             cols="12"
             sm="3"
             lg="2"
-            v-for="(item, i) in customer.children.filter(
-              (item) => item.type === 'directory'
-            )"
+            v-for="(item, i) in customer.children.filter(item => item.type === 'directory')"
             :key="i"
           >
             <CardFile @download="getFiles" :month="item" :year="year" />
@@ -63,11 +58,7 @@
       </v-card>
     </v-col>
     <v-col v-if="notFound">
-      <v-card
-        height="50vh"
-        flat
-        class="d-flex flex-column justify-center align-center"
-      >
+      <v-card height="50vh" flat class="d-flex flex-column justify-center align-center">
         <h3>
           Nenhum arquivo encontrado
         </h3>
@@ -91,7 +82,9 @@ export default {
     this.getFiles();
     this.client_name = localStorage.getItem('cliente');
     setTimeout(() => {
-      if ((this.customer && !this.customer.children) || !this.customer) { this.notFound = true; }
+      if ((this.customer && !this.customer.children) || !this.customer) {
+        this.notFound = true;
+      }
     }, 2500);
   },
   data() {
@@ -107,11 +100,14 @@ export default {
     customer() {
       let customer;
       if (
-        this.$store.state.customers.customerSelected
-        && this.$store.state.customers.customerSelected.children
+        this.$store.state.customers.customerSelected &&
+        this.$store.state.customers.customerSelected.children
       ) {
-        this.$store.state.customers.customerSelected.children.filter((item) => {
+        this.$store.state.customers.customerSelected.children.forEach(item => {
           if (parseInt(item.name) === parseInt(this.year)) {
+            customer = item;
+          } else {
+            this.year = parseInt(item.name);
             customer = item;
           }
         });
@@ -139,11 +135,8 @@ export default {
           },
           noMsg: true,
         })
-        .then((resp) => {
-          this.$store.commit('customers/request', [
-            'customerSelected',
-            resp.data,
-          ]);
+        .then(resp => {
+          this.$store.commit('customers/request', ['customerSelected', resp.data]);
         });
     },
     selected(item) {
