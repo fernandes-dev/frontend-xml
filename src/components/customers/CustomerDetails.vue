@@ -72,7 +72,7 @@
   </v-row>
 </template>
 <script>
-import CardFile from '@/components/customers/CardFile.vue';
+import CardFile from '@/components/customers/CardFile';
 
 export default {
   components: {
@@ -106,9 +106,6 @@ export default {
         this.$store.state.customers.customerSelected.children.forEach(item => {
           if (parseInt(item.name) === parseInt(this.year)) {
             customer = item;
-          } else {
-            this.year = parseInt(item.name);
-            customer = item;
           }
         });
         localStorage.setItem('sizes', JSON.stringify(customer));
@@ -121,6 +118,16 @@ export default {
     },
   },
   methods: {
+    setYear() {
+      if (
+        this.$store.state.customers.customerSelected &&
+        this.$store.state.customers.customerSelected.children
+      ) {
+        const itemList = this.$store.state.customers.customerSelected.children;
+
+        this.year = parseInt(itemList[itemList.length - 1].name);
+      }
+    },
     getFiles() {
       this.$store
         .dispatch('customers/request', {
@@ -137,10 +144,11 @@ export default {
         })
         .then(resp => {
           this.$store.commit('customers/request', ['customerSelected', resp.data]);
+          this.setYear();
         });
     },
     selected(item) {
-      if (item == this.year) {
+      if (parseInt(item) === parseInt(this.year)) {
         return 'light-blue accent-4';
       }
       return 'grey lighten-5';
