@@ -27,12 +27,7 @@
     </div>
 
     <v-row v-else>
-      <v-col
-        cols="12"
-        sm="4"
-        v-for="(customer, i) in customersFiltered"
-        :key="i"
-      >
+      <v-col cols="12" sm="4" v-for="(customer, i) in customersFiltered" :key="i">
         <Customer :customer="customer" />
       </v-col>
     </v-row>
@@ -60,15 +55,17 @@ export default {
       return {};
     },
     customersFiltered() {
+      let customersFiltered = this.customers;
       if (this.customers && this.customers.length > 0) {
         if (this.filter) {
-          return this.customers.filter(
-            (c) => c.client.clientes_razao
-              .toLowerCase()
-              .indexOf(this.filter.toLowerCase()) >= 0,
+          customersFiltered = this.customers.filter(
+            c =>
+              c.client.clientes_razao.toLowerCase().indexOf(this.filter.toLowerCase()) >= 0 ||
+              c.client.clientes_fantasia.toLowerCase().indexOf(this.filter.toLowerCase()) >= 0 ||
+              c.client.clientes_cnpj.indexOf(this.filter) >= 0,
           );
         }
-        return this.customers;
+        return customersFiltered;
       }
 
       return [];
@@ -79,91 +76,91 @@ export default {
 </script>
 
 <style>
-  .sk-chase {
-    width: 60px;
-    height: 60px;
-    margin: auto;
-    margin-top: 20%;
-    position: relative;
-    animation: sk-chase 2.5s infinite linear both;
-  }
+.sk-chase {
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  margin-top: 20%;
+  position: relative;
+  animation: sk-chase 2.5s infinite linear both;
+}
 
-  .sk-chase-dot {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    animation: sk-chase-dot 2s infinite ease-in-out both;
-  }
+.sk-chase-dot {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: sk-chase-dot 2s infinite ease-in-out both;
+}
 
-  .sk-chase-dot:before {
-    content: "";
-    display: block;
-    width: 20%;
-    height: 20%;
-    background-color: #1697f6;
-    border-radius: 100%;
-    animation: sk-chase-dot-before 2s infinite ease-in-out both;
-  }
+.sk-chase-dot:before {
+  content: '';
+  display: block;
+  width: 20%;
+  height: 20%;
+  background-color: #1697f6;
+  border-radius: 100%;
+  animation: sk-chase-dot-before 2s infinite ease-in-out both;
+}
 
-  .sk-chase-dot:nth-child(1) {
-    animation-delay: -1.1s;
-  }
-  .sk-chase-dot:nth-child(2) {
-    animation-delay: -1s;
-  }
-  .sk-chase-dot:nth-child(3) {
-    animation-delay: -0.9s;
-  }
-  .sk-chase-dot:nth-child(4) {
-    animation-delay: -0.8s;
-  }
-  .sk-chase-dot:nth-child(5) {
-    animation-delay: -0.7s;
-  }
-  .sk-chase-dot:nth-child(6) {
-    animation-delay: -0.6s;
-  }
-  .sk-chase-dot:nth-child(1):before {
-    animation-delay: -1.1s;
-  }
-  .sk-chase-dot:nth-child(2):before {
-    animation-delay: -1s;
-  }
-  .sk-chase-dot:nth-child(3):before {
-    animation-delay: -0.9s;
-  }
-  .sk-chase-dot:nth-child(4):before {
-    animation-delay: -0.8s;
-  }
-  .sk-chase-dot:nth-child(5):before {
-    animation-delay: -0.7s;
-  }
-  .sk-chase-dot:nth-child(6):before {
-    animation-delay: -0.6s;
-  }
+.sk-chase-dot:nth-child(1) {
+  animation-delay: -1.1s;
+}
+.sk-chase-dot:nth-child(2) {
+  animation-delay: -1s;
+}
+.sk-chase-dot:nth-child(3) {
+  animation-delay: -0.9s;
+}
+.sk-chase-dot:nth-child(4) {
+  animation-delay: -0.8s;
+}
+.sk-chase-dot:nth-child(5) {
+  animation-delay: -0.7s;
+}
+.sk-chase-dot:nth-child(6) {
+  animation-delay: -0.6s;
+}
+.sk-chase-dot:nth-child(1):before {
+  animation-delay: -1.1s;
+}
+.sk-chase-dot:nth-child(2):before {
+  animation-delay: -1s;
+}
+.sk-chase-dot:nth-child(3):before {
+  animation-delay: -0.9s;
+}
+.sk-chase-dot:nth-child(4):before {
+  animation-delay: -0.8s;
+}
+.sk-chase-dot:nth-child(5):before {
+  animation-delay: -0.7s;
+}
+.sk-chase-dot:nth-child(6):before {
+  animation-delay: -0.6s;
+}
 
-  @keyframes sk-chase {
-    100% {
-      transform: rotate(360deg);
-    }
+@keyframes sk-chase {
+  100% {
+    transform: rotate(360deg);
   }
+}
 
-  @keyframes sk-chase-dot {
-    80%,
-    100% {
-      transform: rotate(360deg);
-    }
+@keyframes sk-chase-dot {
+  80%,
+  100% {
+    transform: rotate(360deg);
   }
+}
 
-  @keyframes sk-chase-dot-before {
-    50% {
-      transform: scale(0.4);
-    }
-    100%,
-    0% {
-      transform: scale(1);
-    }
+@keyframes sk-chase-dot-before {
+  50% {
+    transform: scale(0.4);
   }
+  100%,
+  0% {
+    transform: scale(1);
+  }
+}
 </style>
