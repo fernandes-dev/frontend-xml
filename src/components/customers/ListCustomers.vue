@@ -56,7 +56,14 @@ export default {
     },
     customersFiltered() {
       let customersFiltered = this.customers;
+
       if (this.customers && this.customers.length > 0) {
+        customersFiltered = customersFiltered.sort((a, b) => {
+          if (a.client.clientes_razao > b.client.clientes_razao) {
+            return 1;
+          }
+          return -1;
+        });
         if (this.filter) {
           customersFiltered = this.customers.filter(
             c =>

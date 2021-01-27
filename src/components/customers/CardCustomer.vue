@@ -1,13 +1,25 @@
 <template>
-  <v-card
-    link
-    flat
-    height="100px"
-    class="pa-3"
-    color="grey lighten-5"
-    @click="getFiles(customer)"
-  >
-    <v-row class="pa-3">
+  <v-card link flat height="100px" color="grey lighten-5" @click="getFiles(customer)">
+    <v-list color="transparent" three-line>
+      <template>
+        <v-list-item three-line>
+          <v-list-item-avatar tile>
+            <v-img src="@/assets/icons/company-folder.png"></v-img>
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-subtitle v-html="customer.client.clientes_razao"></v-list-item-subtitle>
+            <v-list-item-subtitle>
+              <span class="font-weight-bold">
+                {{ customer.client.clientes_cnpj.length === 14 ? 'CNPJ: ' : 'CPF: ' }}
+                {{ customer.client.clientes_cnpj | formatCNPJ }}
+              </span>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+    </v-list>
+    <!-- <v-row class="pa-3 pb-0">
       <v-col cols="4" class="d-flex justify-center pa-0">
         <v-avatar tile size="40">
           <v-img src="@/assets/icons/company-folder.png"></v-img>
@@ -19,6 +31,12 @@
         </div>
       </v-col>
     </v-row>
+    <div class="pl-4">
+      <small>{{ customer.client.clientes_cnpj.length === 14 ? 'CNPJ: ' : 'CPF: ' }} </small>
+      <small>
+        {{ customer.client.clientes_cnpj | formatCNPJ }}
+      </small>
+    </div> -->
   </v-card>
 </template>
 <script>

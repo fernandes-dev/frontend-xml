@@ -17,11 +17,13 @@
           <v-row align="center">
             <v-col cols="4">
               <div>
-                <small>Empresa: </small>
-                <small v-text="$route.params.cnpj"></small>
                 <div>
                   <span v-text="client_name"></span>
                 </div>
+                <small>
+                  {{ $route.params.cnpj.length === 14 ? 'CNPJ: ' : 'CPF: ' }}
+                  {{ $route.params.cnpj | formatCNPJ }}
+                </small>
                 <!-- <div>
                   <span v-text="$route.params.cnpj"></span>
                 </div> -->

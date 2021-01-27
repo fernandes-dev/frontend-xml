@@ -19,6 +19,8 @@
         "vue"
     ],
     "rules": {
+      "import/no-named-as-default": "off",
+      "import/no-named-as-default-member": "off",
       "radix":"off",
       "arrow-parens": "off",
       "no-param-reassign": "off",
